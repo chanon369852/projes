@@ -41,8 +41,8 @@ router.post('/register', [
     // 1. Create user (Set is_active to FALSE initially)
     const result = await db.query(
       `INSERT INTO users (student_id, email, password, full_name, nickname, faculty, major, year, university, phone, is_active)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)`,
-      [student_id, email, hashedPassword, full_name, nickname, faculty, major, year || 1, university, phone]
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [student_id, email, hashedPassword, full_name, nickname || null, faculty || null, major || null, year || 1, university || null, phone || null, false]
     );
 
     const userId = result.insertId;

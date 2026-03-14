@@ -139,7 +139,7 @@ class SupabaseDatabase {
     if (!columnsMatch) throw new Error('Cannot extract columns from INSERT');
 
     const columns = columnsMatch[1].split(',').map(c => c.trim());
-    const valuesMatch = sql.match(/VALUES\s*\(([^)]+)\)/is);
+    const valuesMatch = sql.match(/VALUES\s*\((.+)\)/is);
     const valueTokens = valuesMatch
       ? valuesMatch[1].split(',').map(v => v.trim())
       : [];
@@ -148,13 +148,20 @@ class SupabaseDatabase {
     let paramIdx = 0;
 
     columns.forEach((col, i) => {
-      const token = valueTokens[i] || '?';
+      const token = (valueTokens[i] || '?').trim();
       if (/NOW\(\)|CURRENT_TIMESTAMP/i.test(token)) {
         data[col] = new Date().toISOString();
-      } else if (token === '?' && params[paramIdx] !== undefined) {
-        data[col] = params[paramIdx++];
+      } else if (/^TRUE$/i.test(token)) {
+        data[col] = true;
+      } else if (/^FALSE$/i.test(token)) {
+        data[col] = false;
       } else if (/^NULL$/i.test(token)) {
         data[col] = null;
+      } else if (token === '?') {
+        // Accept undefined, null, false, 0 — all valid values
+        if (paramIdx < params.length) {
+          data[col] = params[paramIdx++];
+        }
       }
     });
 
