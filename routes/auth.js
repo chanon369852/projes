@@ -160,10 +160,22 @@ router.get('/verify-email/:token', async (req, res) => {
 
     if (verifications.length === 0) {
       return res.status(400).send(`
-        <div style="text-align:center; margin-top:50px; font-family:sans-serif;">
-          <h2 style="color:red;">ลิงก์ส่วนตัวนี้ไม่ถูกต้องหรือหมดอายุแล้ว</h2>
-          <p>กรุณาสมัครสมาชิกใหม่ หรือติดต่อผู้ดูแลระบบ</p>
-        </div>
+        <!DOCTYPE html>
+        <html lang="th">
+        <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ลิงก์ไม่ถูกต้อง</title>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+        </head>
+        <body style="margin:0;background:linear-gradient(135deg,#1e1e2e 0%,#2d1b69 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Kanit',sans-serif;">
+          <div style="background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:48px 56px;text-align:center;max-width:440px;">
+            <div style="font-size:72px;margin-bottom:16px">❌</div>
+            <h2 style="color:#fff;font-size:24px;margin:0 0 12px">ลิงก์ไม่ถูกต้องหรือหมดอายุแล้ว</h2>
+            <p style="color:rgba(255,255,255,0.65);font-size:15px;margin:0 0 28px">ลิงก์ยืนยันนี้ไม่ถูกต้องหรือหมดอายุ 24 ชั่วโมงแล้ว<br>กรุณาสมัครใหม่หรือติดต่อผู้ดูแลระบบ</p>
+            <a href="${process.env.CORS_ORIGIN || 'http://localhost:3000'}" style="display:inline-block;padding:14px 32px;background:#ef4444;color:white;text-decoration:none;border-radius:50px;font-size:15px;font-weight:600">
+              ⟵ กลับหน้าหลัก
+            </a>
+          </div>
+        </body></html>
       `);
     }
 
@@ -176,16 +188,40 @@ router.get('/verify-email/:token', async (req, res) => {
     await db.query('DELETE FROM user_verifications WHERE token = ?', [token]);
 
     res.send(`
-      <div style="text-align:center; margin-top:50px; font-family:sans-serif;">
-        <h2 style="color:green;">ยืนยันอีเมลสำเร็จ! 🎉</h2>
-        <p>บัญชีของคุณได้รับการเปิดใช้งานแล้ว</p>
-        <p>ปิดหน้านี้และกลับไปเข้าสู่ระบบในแอปพลิเคชันได้เลย</p>
+      <!DOCTYPE html>
+      <html lang="th">
+      <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>ยืนยันอีเมลสำเร็จ!</title>
+      <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+      <style>
+        body{margin:0;background:linear-gradient(135deg,#1e1e2e 0%,#0f4c81 50%,#1a6b3c 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Kanit',sans-serif;}
+        .card{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:48px 56px;text-align:center;max-width:440px;animation:pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+        @keyframes pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+        .icon{font-size:80px;margin-bottom:16px;animation:bounce 1s ease infinite alternate;}
+        @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+        h2{color:#fff;font-size:26px;margin:0 0 12px}
+        p{color:rgba(255,255,255,0.7);font-size:15px;margin:0 0 12px;line-height:1.6}
+        .progress{width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:4px;margin:24px 0;overflow:hidden;}
+        .progress-bar{height:100%;width:100%;background:linear-gradient(90deg,#10b981,#3b82f6);animation:shrink 4s linear forwards;}
+        @keyframes shrink{from{width:100%}to{width:0%}}
+        .btn{display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#10b981,#3b82f6);color:white;text-decoration:none;border-radius:50px;font-size:15px;font-weight:600;margin-top:8px;box-shadow:0 4px 20px rgba(16,185,129,0.4);}
+      </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="icon">🎉</div>
+          <h2>ยืนยันอีเมลสำเร็จ!</h2>
+          <p>บัญชีของคุณได้รับการเปิดใช้งานแล้วครับ คุณสามารถเข้าใช้งานได้เลย ไม่ต้องรอ!</p>
+          <p style="color:rgba(255,255,255,0.45);font-size:13px">ระบบกำลังพาคุณไปหน้าหลักโดยอัตโนมัติ...</p>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a href="${process.env.CORS_ORIGIN || 'http://localhost:3000'}" class="btn">
+            ➡ ไปหน้าเข้าสู่ระบบ
+          </a>
+        </div>
         <script>
-           setTimeout(() => {
-             window.location.href = '${process.env.CORS_ORIGIN || 'http://localhost:3000'}';
-           }, 3000);
+          setTimeout(() => { window.location.href = '${process.env.CORS_ORIGIN || 'http://localhost:3000'}'; }, 4500);
         </script>
-      </div>
+      </body></html>
     `);
   } catch (error) {
     console.error('Verify email error:', error);

@@ -5,6 +5,63 @@ let currentUser = null;
 let currentPage = 'dashboard';
 let dashboardData = null;
 
+// ============ Toast Notification System ============
+function showNotification(message, type = 'info', duration = 5000) {
+  // Remove existing notification
+  const existing = document.getElementById('toastNotification');
+  if (existing) existing.remove();
+
+  const icons = { success: 'check-circle', error: 'times-circle', warning: 'exclamation-triangle', info: 'info-circle', email: 'envelope' };
+  const colors = { success: '#10b981', error: '#ef4444', warning: '#f59e0b', info: '#3b82f6', email: '#8b5cf6' };
+
+  const toast = document.createElement('div');
+  toast.id = 'toastNotification';
+  toast.innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:12px;">
+      <i class="fas fa-${icons[type] || icons.info}" style="font-size:22px;color:${colors[type] || colors.info};margin-top:2px;flex-shrink:0;"></i>
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:14px;color:#1e293b;margin-bottom:4px;">${type === 'email' ? '📧 ตรวจสอบอีเมลของคุณ!' : type === 'success' ? '✅ สำเร็จ!' : type === 'error' ? '❌ เกิดข้อผิดพลาด' : type === 'warning' ? '⚠️ คำเตือน' : 'ℹ️ แจ้งเตือน'}</div>
+        <div style="font-size:13px;color:#475569;line-height:1.5;">${message}</div>
+      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:0;margin-top:-2px;">&times;</button>
+    </div>
+    <div id="toastProgress" style="position:absolute;bottom:0;left:0;height:3px;background:${colors[type] || colors.info};border-radius:0 0 12px 12px;width:100%;transition:width linear ${duration}ms;"></div>
+  `;
+  toast.style.cssText = `
+    position:fixed;top:20px;right:20px;z-index:99999;
+    background:white;border-radius:12px;padding:16px 20px 20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15),0 2px 8px rgba(0,0,0,0.1);
+    max-width:380px;min-width:300px;overflow:hidden;
+    animation:slideInRight 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+    border-left:4px solid ${colors[type] || colors.info};
+  `;
+
+  // Add animation keyframes if not already added
+  if (!document.getElementById('toastStyle')) {
+    const style = document.createElement('style');
+    style.id = 'toastStyle';
+    style.textContent = `@keyframes slideInRight { from { transform:translateX(120%);opacity:0; } to { transform:translateX(0);opacity:1; } }`;
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(toast);
+
+  // Progress bar animation
+  requestAnimationFrame(() => {
+    const bar = document.getElementById('toastProgress');
+    if (bar) bar.style.width = '0%';
+  });
+
+  // Auto remove
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.style.animation = 'slideInRight 0.3s reverse';
+      setTimeout(() => toast.remove(), 300);
+    }
+  }, duration);
+}
+// ============================================================
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
   initApp();
@@ -110,25 +167,38 @@ function setupEventListeners() {
 async function handleLogin(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-  
+  const btn = e.target.querySelector('button[type="submit"]');
+
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...'; }
+
   try {
     const data = await api.login(formData.get('email'), formData.get('password'));
-    
+
     localStorage.setItem('token', data.token);
     api.token = data.token;
     currentUser = data.user;
-    
+
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ'; }
     hideAuthModal();
     loadDashboard();
   } catch (error) {
-    alert(error.message || 'Login failed');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ'; }
+    if (error.message && error.message.includes('verified')) {
+      showNotification('บัญชีนี้ยังไม่ได้ยืนยันอีเมล กรุณาตรวจผลอื่นที่อีเมลของคุณและคลิกลิงก์ยืนยัน', 'warning', 7000);
+    } else {
+      showNotification(error.message || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'error');
+    }
   }
 }
 
 async function handleRegister(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-  
+  const btn = document.getElementById('registerSubmitBtn');
+
+  // Loading state
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังดำเนินการ...'; }
+
   const userData = {
     student_id: formData.get('student_id'),
     email: formData.get('email'),
@@ -136,31 +206,45 @@ async function handleRegister(e) {
     full_name: formData.get('full_name'),
     nickname: formData.get('nickname'),
     faculty: formData.get('faculty'),
-    major: formData.get('major')
+    major: formData.get('major'),
+    university: formData.get('university'),
+    year: formData.get('year') || 1,
+    phone: formData.get('phone')
   };
-  
+
   try {
     const data = await api.register(userData);
-    
+
+    // Reset button
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus"></i> สมัครสมาชิก'; }
+
     // Check if verification is required
     if (data.requires_verification) {
-      alert(data.message || 'สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลของคุณเพื่อยืนยันตัวตนก่อนเข้าสู่ระบบ');
-      // Switch tab to login instead of loading dashboard
+      const email = userData.email;
+      showNotification(
+        `สมัครสำเร็จ! ผมส่งลิงก์ยืนยันตัวตนไปยัง <strong>${email}</strong> แล้วครับ<br>กรุณาคลิกลิงก์ในอีเมลเพื่อเปิดใช้งานบัญชีของคุณ`,
+        'email', 8000
+      );
+      // Switch tab to login
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
       document.querySelectorAll('.auth-form').forEach(form => form.classList.add('hidden'));
       document.getElementById('loginForm').classList.remove('hidden');
+      // Pre-fill email in login form
+      const loginEmailInput = document.querySelector('#loginForm input[name="email"]');
+      if (loginEmailInput) loginEmailInput.value = email;
       return;
     }
-    
+
     localStorage.setItem('token', data.token);
     api.token = data.token;
     currentUser = data.user;
-    
+
     hideAuthModal();
     loadDashboard();
   } catch (error) {
-    alert(error.message || 'Registration failed');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus"></i> สมัครสมาชิก'; }
+    showNotification(error.message || 'Registration failed', 'error');
   }
 }
 

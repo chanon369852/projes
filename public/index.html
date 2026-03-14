@@ -160,41 +160,62 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label><i class="fas fa-id-card"></i> รหัสนักศึกษา</label>
-                                <input type="text" name="student_id" placeholder="631xxxxxxx" required>
+                                <input type="text" name="student_id" placeholder="631xxxxxxx" required autocomplete="username">
                             </div>
                             <div class="form-group">
                                 <label><i class="fas fa-envelope"></i> อีเมล</label>
-                                <input type="email" name="email" placeholder="your@email.com" required>
+                                <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label><i class="fas fa-user"></i> ชื่อ-นามสกุล</label>
-                                <input type="text" name="full_name" placeholder="ชื่อ นามสกุล" required>
+                                <input type="text" name="full_name" placeholder="ชื่อ นามสกุล" required autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label><i class="fas fa-smile"></i> ชื่อเล่น</label>
-                                <input type="text" name="nickname" placeholder="ชื่อเล่น">
+                                <input type="text" name="nickname" placeholder="ชื่อเล่น" autocomplete="nickname">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label><i class="fas fa-university"></i> คณะ</label>
-                                <input type="text" name="faculty" placeholder="เช่น วิทยาศาสตร์">
+                                <input type="text" name="faculty" placeholder="เช่น วิทยาศาสตร์" autocomplete="organization">
                             </div>
                             <div class="form-group">
                                 <label><i class="fas fa-book"></i> สาขา</label>
                                 <input type="text" name="major" placeholder="เช่น วิทยาการคอมพิวเตอร์">
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-building"></i> มหาวิทยาลัย</label>
+                                <input type="text" name="university" placeholder="ชื่อมหาวิทยาลัย" autocomplete="organization">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-layer-group"></i> ชั้นปี</label>
+                                <select name="year">
+                                    <option value="1">ปี 1</option>
+                                    <option value="2">ปี 2</option>
+                                    <option value="3">ปี 3</option>
+                                    <option value="4">ปี 4</option>
+                                    <option value="5">ปี 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> เบอร์โทรศัพท์</label>
+                            <input type="tel" name="phone" placeholder="08xxxxxxxx" autocomplete="tel">
+                        </div>
                         <div class="form-group">
                             <label><i class="fas fa-lock"></i> รหัสผ่าน</label>
-                            <input type="password" name="password" placeholder="อย่างน้อย 6 ตัวอักษร" required>
+                            <input type="password" name="password" placeholder="อย่างน้อย 6 ตัวอักษร" required autocomplete="new-password">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">
+                        <button type="submit" class="btn btn-primary btn-block" id="registerSubmitBtn">
                             <i class="fas fa-user-plus"></i> สมัครสมาชิก
                         </button>
                     </form>
+
                 </div>
             </div>
         </div>
