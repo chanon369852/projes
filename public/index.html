@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Student Life Manager | ระบบจัดการชีวิตนักศึกษาอัจฉริยะ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page hidden">
+        <!-- Modern Navbar -->
+        <nav class="landing-nav">
+            <div class="landing-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Smart Student</span>
+            </div>
+            <div class="landing-nav-links">
+                <a href="#features">ฟีเจอร์เด่น</a>
+                <a href="#" id="navAuthBtn" class="btn btn-primary" style="padding: 10px 20px;">เข้าสู่ระบบ / เริ่มต้นใช้งาน</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">🚀 อัปเดตใหม่ v2.0 AI Edition!</div>
+                <h1 class="hero-title">ยกระดับชีวิตนักศึกษาด้วย <br><span>AI อัจฉริยะ 🧠</span></h1>
+                <p class="hero-subtitle">ลืมเรื่องปัญหาลืมทำงาน การเงินช็อต หรือตารางเรียนชนกันไปได้เลย! ระบบเดียวที่จัดการตารางเรียน, งาน, การเงิน, และความเครียดให้กับคุณ</p>
+                <div class="hero-actions">
+                    <button id="heroAuthBtn" class="btn btn-primary btn-lg banner-btn">
+                        <i class="fas fa-rocket"></i> เริ่มต้นใช้งานฟรี
+                    </button>
+                    <a href="#features" class="btn btn-secondary btn-lg banner-btn" style="background: rgba(255,255,255,0.1); color: white;">
+                        <i class="fas fa-info-circle"></i> ดูรายละเอียด
+                    </a>
+                </div>
+            </div>
+            <div class="hero-graphics">
+                <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students studying" class="hero-img">
+                <div class="floating-bubble b1"><i class="fas fa-calendar-check text-success"></i> <span>ตารางเรียนวันนี้...</span></div>
+                <div class="floating-bubble b2"><i class="fas fa-robot text-primary"></i> <span>AI: มีงานต้องส่งพรุ่งนี้ 2 งานนะ!</span></div>
+                <div class="floating-bubble b3"><i class="fas fa-wallet text-warning"></i> <span>งบสัปดาห์นี้ใช้เกินแล้ว!</span></div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="section-header">
+                <h2 class="section-title">ความสามารถที่ครบจบในแอปเดียว</h2>
+                <p class="section-subtitle">เราออกแบบระบบมาเพื่อเป็น "ผู้ช่วยส่วนตัว" ของนักศึกษาจริงๆ</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>ตารางเรียนอัจฉริยะ</h3>
+                    <p>ระบบแจ้งเตือนตารางเรียนอัตโนมัติก่อนถึงเวลาเรียน 15 นาที พร้อมดูวิชาเรียนของแต่ละวัน</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--secondary);"><i class="fas fa-tasks"></i></div>
+                    <h3>ติดตามงานและเดดไลน์</h3>
+                    <p>ไม่พลาดทุกเดดไลน์ ระบบจัดอันดับงานด่วน และแยกแยะงานที่เสร็จและที่กำลังถึงกำหนดในเร็วๆ นี้</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(236, 72, 153, 0.1); color: var(--accent-pink);"><i class="fas fa-robot"></i></div>
+                    <h3>A.I. วางแผนชีวิต (Beta)</h3>
+                    <p>ปัญญาประดิษฐ์แนะนำช่วงเวลาทำงานที่มีประสิทธิภาพ จัดการตารางเวลาของคุณด้วย AI</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-orange);"><i class="fas fa-wallet"></i></div>
+                    <h3>จัดการด้านการเงิน</h3>
+                    <p>ระบบคุมงบรายเดือน ช่วยประเมินการใช้จ่าย และแจ้งเตือนเมื่อคุณเริ่มใช้เงินเกินกว่าปกติ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--accent-red);"><i class="fas fa-brain"></i></div>
+                    <h3>วิเคราะห์ความเครียด</h3>
+                    <p>เราใส่ใจสุขภาพจิต ช่วยประเมินและแจ้งเตือนเมื่อภาระงานหนักเกินไป พร้อมแนะนำวิธีผ่อนคลาย</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan);"><i class="fas fa-users"></i></div>
+                    <h3>เชื่อมต่อกับเพื่อน</h3>
+                    <p>เพิ่มเพื่อน หาช่วงเวลาว่างตรงกัน และจัดการเป้าหมายด้านการเรียนร่วมกันได้ง่ายๆ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>พร้อมที่จะเปลี่ยนชีวิตนักศึกษาของคุณให้ง่ายขึ้นแล้วหรือยัง?</h2>
+            <p>ลงทะเบียนใช้งานได้เลยวันนี้ ฟรีเพื่อนักศึกษา 100%</p>
+            <button id="ctaAuthBtn" class="btn btn-primary btn-lg" style="font-size: 18px; padding: 15px 40px; margin-top: 20px;">
+                <i class="fas fa-user-plus"></i> สมัครใช้งานตอนนี้!
+            </button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <div class="footer-content">
+                <div class="logo"><i class="fas fa-graduation-cap"></i> Smart Student Life Manager</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 Smart Student Life Manager. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <div class="auth-left">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h1>Smart Student</h1>
+                    </div>
+                    <p class="tagline">ระบบจัดการชีวิตนักศึกษาอัจฉริยะ</p>
+                    <div class="features-preview">
+                        <div class="feature-item">
+                            <i class="fas fa-robot"></i>
+                            <span>AI วางแผนชีวิต</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>จัดการตารางเรียน</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-brain"></i>
+                            <span>วิเคราะห์ความเครียด</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-right">
+                    <div class="auth-tabs">
+                        <button class="tab-btn active" data-tab="login">เข้าสู่ระบบ</button>
+                        <button class="tab-btn" data-tab="register">สมัครสมาชิก</button>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> อีเมล</label>
+                            <input type="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> รหัสผ่าน</label>
+                            <input type="password" name="password" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+                        </button>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form id="registerForm" class="auth-form hidden">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-id-card"></i> รหัสนักศึกษา</label>
+                                <input type="text" name="student_id" placeholder="631xxxxxxx" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> อีเมล</label>
+                                <input type="email" name="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> ชื่อ-นามสกุล</label>
+                                <input type="text" name="full_name" placeholder="ชื่อ นามสกุล" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-smile"></i> ชื่อเล่น</label>
+                                <input type="text" name="nickname" placeholder="ชื่อเล่น">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-university"></i> คณะ</label>
+                                <input type="text" name="faculty" placeholder="เช่น วิทยาศาสตร์">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-book"></i> สาขา</label>
+                                <input type="text" name="major" placeholder="เช่น วิทยาการคอมพิวเตอร์">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> รหัสผ่าน</label>
+                            <input type="password" name="password" placeholder="อย่างน้อย 6 ตัวอักษร" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> สมัครสมาชิก
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Smart Student</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#schedule" class="nav-item" data-page="schedule">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>ตารางเรียน</span>
+                </a>
+                <a href="#tasks" class="nav-item" data-page="tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>งาน / Deadline</span>
+                </a>
+                <a href="#expenses" class="nav-item" data-page="expenses">
+                    <i class="fas fa-wallet"></i>
+                    <span>รายรับรายจ่าย</span>
+                </a>
+                <a href="#ai-planner" class="nav-item" data-page="ai-planner">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Planner</span>
+                    <span class="badge beta">AI</span>
+                </a>
+                <a href="#friends" class="nav-item" data-page="friends">
+                    <i class="fas fa-users"></i>
+                    <span>เพื่อน</span>
+                </a>
+                <a href="#stress" class="nav-item" data-page="stress">
+                    <i class="fas fa-brain"></i>
+                    <span>ความเครียด</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-mini">
+                    <img src="https://ui-avatars.com/api/?name=User&background=3B82F6&color=fff" alt="User" class="avatar">
+                    <div class="user-info">
+                        <span class="name" id="userName">User</span>
+                        <span class="role">นักศึกษา</span>
+                    </div>
+                    <button id="logoutBtn" class="btn-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <span class="date-display" id="currentDate"></span>
+                </div>
+                <div class="top-actions">
+                    <button class="btn-icon notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-count" id="notificationCount">0</span>
+                    </button>
+                    <button class="btn-icon" id="quickAskBtn">
+                        <i class="fas fa-comment-dots"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-area" id="contentArea">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Quick Ask Modal -->
+    <div id="quickAskModal" class="modal">
+        <div class="modal-content quick-ask-content">
+            <div class="quick-ask-header">
+                <h3><i class="fas fa-robot"></i> ถาม AI ด่วน</h3>
+                <button class="btn-close" id="closeQuickAskBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quick-ask-body">
+                <div class="quick-ask-messages" id="quickAskMessages"></div>
+                <div class="quick-ask-input">
+                    <input type="text" id="quickAskInput" placeholder="เช่น: สัปดาห์นี้มีสอบ Database ควรอ่านตอนไหน?">
+                    <button class="btn btn-primary" id="sendQuickAskBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content notification-content">
+            <div class="notification-header">
+                <h3><i class="fas fa-bell"></i> การแจ้งเตือน</h3>
+                <button class="btn-close" id="closeNotificationBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="notification-list" id="notificationList"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/expenses.js"></script>
+    <script src="js/ai-planner.js"></script>
+    <script src="js/friends.js"></script>
+    <script src="js/stress.js"></script>
+</body>
+</html>
